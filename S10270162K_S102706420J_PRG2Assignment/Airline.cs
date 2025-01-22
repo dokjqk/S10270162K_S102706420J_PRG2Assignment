@@ -1,4 +1,10 @@
-﻿using System;
+﻿//==========================================================
+// Student Number : S10270162
+// Student Name : Hendi Wong Jia Ming
+// Partner Name : Ahmad Danial Azman
+//==========================================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace S10270162K_S102706420J_PRG2Assignment
 {
-    class Airline
+    public class Airline
     {
         private string name;
         public string Name
@@ -46,7 +52,7 @@ namespace S10270162K_S102706420J_PRG2Assignment
             }
             else
             {
-                flights.Add(flight.FlightNumber, flight);
+                flights.Add(code, flight);
                 return true;
             }
         }
@@ -83,5 +89,11 @@ namespace S10270162K_S102706420J_PRG2Assignment
             }
             return fees;
         }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}, Code: {Code}, Flight: {flights.Count}";
+        }
     }
+
 }
