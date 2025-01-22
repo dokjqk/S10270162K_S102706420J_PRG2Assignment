@@ -24,8 +24,28 @@ namespace S10270162K_S102706420J_PRG2Assignment
 
         public override double CalculateFees()
         {
-            throw new NotImplementedException();
+            double fees = 0;
+            fees += 300;
+            if (origin == "Singapore (SIN)")
+            {
+                fees += 800;
+            }
+            if (destination == "Singapore (SIN)")
+            {
+                fees += 500;
+            }
+            if (ExpectedTime.TimeOfDay < TimeSpan.FromHours(11) || ExpectedTime.TimeOfDay > TimeSpan.FromHours(21))
+            {
+                fees -= 110;
+            }
+            if (origin == "Dubai (DXB)" || origin == "Bangkok (BKK)" || origin == "Tokyo (NRT)")
+            {
+                fees -= 25;
+            }
+            fees += 300;
+            return fees;
         }
+
         public override string ToString()
         {
             return base.ToString() + $" requestFee {requestFee}";
