@@ -1,4 +1,10 @@
-﻿using System;
+﻿//==========================================================
+// Student Number : S10270162
+// Student Name : Hendi Wong Jia Ming
+// Partner Name : Ahmad Danial Azman
+//==========================================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

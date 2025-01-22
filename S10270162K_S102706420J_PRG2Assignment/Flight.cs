@@ -1,4 +1,10 @@
-﻿using System;
+﻿//==========================================================
+// Student Number : S10270162
+// Student Name : Hendi Wong Jia Ming
+// Partner Name : Ahmad Danial Azman
+//==========================================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace S10270162K_S102706420J_PRG2Assignment
 {
-    abstract class Flight
+    public abstract class Flight
     {
         private string flightNumber;
         public string FlightNumber
