@@ -13,7 +13,42 @@
 
 
 // Basic Features
+Terminal terminal5 = new Terminal("Terminal 5");
+
 // 1. Load files (airlines and boarding gates) (Hendi)
+static void LoadAirlinesAndBoardingGates(Terminal terminal5)
+{
+    const string airlineFile = "airlines.csv";
+    const string boardingGatesFile = "boardinggates.csv";
+
+    using (StreamReader fileReader = new StreamReader(airlineFile))
+    {
+        fileReader.ReadLine();
+        string line;
+        while((line = fileReader.ReadLine()) != null)
+        {
+            string[] fileArray = line.Split(',');
+            Airline airline = new Airline(fileArray[0], fileArray[1]);
+            terminal5.AddAirline(airline);
+        }
+    }
+
+    using (StreamReader fileReader = new StreamReader(boardingGatesFile))
+    {
+        fileReader.ReadLine();
+        string line;
+        while ((line = fileReader.ReadLine()) != null)
+        {
+            string[] fileArray = line.Split(',');
+            BoardingGate boardingGate = new BoardingGate(fileArray[0], bool.Parse(fileArray[1]), bool.Parse(fileArray[2]), bool.Parse(fileArray[3]));
+            terminal5.AddBoardingGate(boardingGate);
+        }
+    }
+}
+
+LoadAirlinesAndBoardingGates(terminal5);
+Console.WriteLine(terminal5.ToString());
+
 // 2. Load files (flights) (Ahmad)
 // 3. List all flights with their basic information (Ahmad)
 // 4. List all boarding gates (Hendi)
@@ -22,6 +57,5 @@
 // 7. Display full flight details from an airline (Hendi)
 // 8. Modify flight details (Hendi)
 // 9. Display scheduled flights in chronological order, with boarding gates assignments where applicable (Ahmad)
-
-// Advance Features
+// Advanced Features
 
