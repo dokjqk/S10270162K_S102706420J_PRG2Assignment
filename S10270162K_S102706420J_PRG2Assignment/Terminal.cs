@@ -16,14 +16,14 @@ namespace S10270162K_S102706420J_PRG2Assignment
     public class Terminal
     {
         //readonly used for immutability
-        private readonly string terminalName;
-        private readonly Dictionary<string, Airline> airlines = new Dictionary<string, Airline>();
-        private readonly Dictionary<string, BoardingGate> boardingGates = new Dictionary<string, BoardingGate>();
-        private readonly Dictionary<string, double> gateFees = new Dictionary<string, double>();
+        public readonly string terminalName;
+        public readonly Dictionary<string, Airline> airlines = new Dictionary<string, Airline>();
+        public readonly Dictionary<string, BoardingGate> boardingGates = new Dictionary<string, BoardingGate>();
+        public readonly Dictionary<string, double> gateFees = new Dictionary<string, double>();
 
         public Terminal(string terminalName)
         {
-            this.terminalName = terminalName;
+            this.terminalName = terminalName;;
         }
         //Adding airline tot the terminal
         public bool AddAirline(Airline airline)
