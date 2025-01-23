@@ -52,7 +52,7 @@ namespace S10270162K_S102706420J_PRG2Assignment
             }
             else
             {
-                flights.Add(code, flight);
+                Flights.Add(flight.FlightNumber, flight);
                 return true;
             }
         }
