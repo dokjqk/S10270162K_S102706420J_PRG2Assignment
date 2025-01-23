@@ -47,11 +47,28 @@ static void LoadAirlinesAndBoardingGates(Terminal terminal5)
 }
 
 LoadAirlinesAndBoardingGates(terminal5);
-Console.WriteLine(terminal5.ToString());
+// Test code for Question 1
+// Console.WriteLine(terminal5.ToString());
 
 // 2. Load files (flights) (Ahmad)
 // 3. List all flights with their basic information (Ahmad)
+
 // 4. List all boarding gates (Hendi)
+static void ListAllBoardingGates(Terminal terminal5)
+{
+    Console.WriteLine("=============================================");
+    Console.WriteLine("List of Boarding Gates for Changi Airport Terminal 5");
+    Console.WriteLine("=============================================");
+    Console.WriteLine(String.Format("{0,-15} {1,-10} {2,-10} {3,-10}", "Gate Name", "DDJB", "CFFT", "LWTT"));
+    Dictionary<string, BoardingGate> airlineDict = terminal5.boardingGates;
+    foreach (KeyValuePair<string, BoardingGate> entry in airlineDict)
+    {
+        Console.WriteLine(String.Format("{0,-15} {1,-10} {2,-10} {3,-10}", entry.Key, entry.Value.SupportsDDJB, entry.Value.SupportsCFFT, entry.Value.SupportsLWTT));
+    }
+}
+ListAllBoardingGates(terminal5);
+
+
 // 5. Assign a boarding gate to a flight (Ahmad)
 // 6. Create a new flight (Ahmad)
 // 7. Display full flight details from an airline (Hendi)
