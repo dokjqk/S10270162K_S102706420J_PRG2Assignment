@@ -56,17 +56,16 @@ namespace S10270162K_S102706420J_PRG2Assignment
                 return true;
             }
         }
-
         public bool RemoveFlight(Flight flight)
         {
             if (Flights.ContainsKey(flight.FlightNumber))
             {
-                return false;
+                Flights.Remove(flight.FlightNumber); 
+                return true; 
             }
             else
             {
-                flights.Remove(flight.FlightNumber);
-                return true;
+                return false;
             }
         }
 
