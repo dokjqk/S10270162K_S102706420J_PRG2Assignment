@@ -312,11 +312,12 @@ static Airline DisplayFullFlightDetails(Terminal terminal5)
     Console.WriteLine("=============================================");
     Console.WriteLine($"List of Flights for {airlineSearch.Name}");
     Console.WriteLine("=============================================");
-    Console.WriteLine(String.Format("{0,-15} {1,-30} {2,-15} {3,-20} {4,-35} {5,-20} {6,-20}", "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival Time", "Status", "Special Request Code", "Boarding Gate"));
+    Console.WriteLine(String.Format("{0,-15} {1,-30} {2,-15} {3,-20} {4,-35} {5,-20} {6,-20} {7,-20}", "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival Time", "Status", "Special Request Code", "Boarding Gate"));
 
     foreach (KeyValuePair<string, Flight> entry in airlineSearch.Flights)
     {
         string specialRequestCode = null;
+        string boardingGate = null;
         if (entry.Value is CFFTFlight)
         {
             specialRequestCode = "CFFT";
@@ -333,7 +334,14 @@ static Airline DisplayFullFlightDetails(Terminal terminal5)
         {
             specialRequestCode = "NORM";
         }
-        Console.WriteLine(String.Format("{0,-15} {1,-30} {2,-15} {3,-20} {4,-35} {5,-20} {6,-20}", entry.Key, airlineSearch.Name, entry.Value.Origin, entry.Value.Destination, entry.Value.ExpectedTime, entry.Value.Status, specialRequestCode));
+        foreach (KeyValuePair<string, BoardingGate> entryBoarding in terminal5.boardingGates)
+        {
+            if (entryBoarding.Value.Flight == entry.Value)
+            {
+                boardingGate = entryBoarding.Key;
+            }
+        }
+        Console.WriteLine(String.Format("{0,-15} {1,-30} {2,-15} {3,-20} {4,-35} {5,-20} {6,-20} {7,-20}", entry.Key, airlineSearch.Name, entry.Value.Origin, entry.Value.Destination, entry.Value.ExpectedTime, entry.Value.Status, specialRequestCode, boardingGate));
     }
     return airlineSearch;
 }
@@ -400,31 +408,86 @@ static void ModifyFlightDetails(Terminal terminal5)
             Console.WriteLine($"Airline Name: {airlineSearch.Name}");
             Console.WriteLine($"Flight Origin: {flightObjectToModify.Origin}");
             Console.WriteLine($"Flight Destination: {flightObjectToModify.Destination}");
+            Console.WriteLine($"Flight Expected Time: {flightObjectToModify.Destination}");
             Console.Write("Enter new Status: ");
             string statusToModify = Console.ReadLine();
             flightObjectToModify.Status = statusToModify;
-
-
         }
         else if (modifyOptions == "3")
         {
             Console.WriteLine($"Flight Number: {flightObjectToModify.FlightNumber}");
+            string flightNumber = flightObjectToModify.FlightNumber;
             Console.WriteLine($"Airline Name: {airlineSearch.Name}");
+            string airlineName = airlineSearch.Name;
             Console.WriteLine($"Flight Origin: {flightObjectToModify.Origin}");
+            string origin = flightObjectToModify.Origin;
             Console.WriteLine($"Flight Destination: {flightObjectToModify.Destination}");
+            string destination = flightObjectToModify.Destination;
+            Console.WriteLine($"Flight Expected Time: {flightObjectToModify.ExpectedTime}");
+            DateTime expectedTime = flightObjectToModify.ExpectedTime;
             Console.Write("Enter new Special Request Code: ");
             string codeToModify = Console.ReadLine();
-            // 6. Create a new flight (Ahmad)
+            Flight flight;
+            switch (codeToModify)
+            {
+                case "CFFT":
+                    flight = new CFFTFlight(flightNumber, origin, destination, expectedTime, "Scheduled", 150);
+                    break;
+                case "DDJB":
+                    flight = new DDJBFlight(flightNumber, origin, destination, expectedTime, "Scheduled", 300);
+                    break;
+                case "LWTT":
+                    flight = new LWTTFlight(flightNumber, origin, destination, expectedTime, "Scheduled", 500);
+                    break;
+                default:
+                    flight = new NORMFlight(flightNumber, origin, destination, expectedTime, "Scheduled");
+                    break;
+            }
+            airlineSearch.RemoveFlight(flightObjectToModify);
+            airlineSearch.AddFlight(flight);
         }
         else
         {
-            Console.WriteLine($"Flight Number: {flightObjectToModify.FlightNumber}");
-            Console.WriteLine($"Airline Name: {airlineSearch.Name}");
-            Console.WriteLine($"Flight Origin: {flightObjectToModify.Origin}");
-            Console.WriteLine($"Flight Destination: {flightObjectToModify.Destination}");
-            Console.Write("Enter new Boarding Gate: ");
-            string gateToModify = Console.ReadLine();
-            // 5. Assign a boarding gate to a flight (Ahmad)
+            while (true)
+            {
+                Console.WriteLine($"Flight Number: {flightObjectToModify.FlightNumber}");
+                Console.WriteLine($"Airline Name: {airlineSearch.Name}");
+                Console.WriteLine($"Flight Origin: {flightObjectToModify.Origin}");
+                Console.WriteLine($"Flight Destination: {flightObjectToModify.Destination}");
+                Console.Write("Enter new Boarding Gate: ");
+                string gateToModify = Console.ReadLine();
+
+                BoardingGate oldGate = null;
+                BoardingGate newGate = null;
+                bool flightFound = false;
+
+                foreach (KeyValuePair<string, BoardingGate> entryBoarding in terminal5.boardingGates)
+                {
+                    if (entryBoarding.Value.Flight == flightObjectToModify)
+                    {
+                        oldGate = entryBoarding.Value;
+                        flightFound = true;
+                        break;
+                    }
+                }
+                if (!flightFound)
+                {
+                    Console.WriteLine("Flight does not have a Boarding Gate");
+                    break;
+                }
+                oldGate.Flight = null;
+                Console.WriteLine($"Flight removed from {oldGate.GateName}.");
+                foreach (KeyValuePair<string, BoardingGate> entryBoarding in terminal5.boardingGates)
+                {
+                    if (entryBoarding.Value.GateName == gateToModify)
+                    {
+                        newGate = entryBoarding.Value;
+                        break;
+                    }
+                }
+                newGate.Flight = flightObjectToModify;
+                break;
+            }
         }
     }
     else
