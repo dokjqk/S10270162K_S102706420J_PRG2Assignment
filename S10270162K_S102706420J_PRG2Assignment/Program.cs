@@ -105,19 +105,22 @@ static void LoadFlights(Terminal terminal5)
 LoadFlights(terminal5);
 
 
+
 // 3. List all flights with their basic information (Ahmad)
 static void ListAllFlights(Terminal terminal5)
 {
     Console.WriteLine("=============================================");
-    Console.WriteLine("List of All Flights");
+    Console.WriteLine("List of Flights for Changi Airport Terminal 5");
     Console.WriteLine("=============================================");
-    Console.WriteLine(String.Format("{0,-10} {1,-20} {2,-20} {3,-20} {4,-20}", "Flight No", "Airline Name", "Origin", "Destination", "Expected Time"));
+    Console.WriteLine(String.Format("{0,-15} {1,-20} {2,-20} {3,-20} {4,-35}", "Flight Number", "Airline Name", "Origin", "Destination", "Expected Date"));
+    Console.WriteLine("Departure/Arrival Time");
 
     foreach (var airline in terminal5.airlines.Values)
     {
         foreach (var flight in airline.Flights.Values)
         {
-            Console.WriteLine(String.Format("{0,-10} {1,-20} {2,-20} {3,-20} {4,-20}", flight.FlightNumber, airline.Name, flight.Origin, flight.Destination, flight.ExpectedTime));
+            Console.WriteLine(String.Format("{0,-15} {1,-20} {2,-20} {3,-20} {4,-35}", flight.FlightNumber, airline.Name, flight.Origin, flight.Destination, flight.ExpectedTime.ToString("dd/MM/yyyy")));
+            Console.WriteLine(flight.ExpectedTime.ToString("hh:mm:ss tt"));
         }
     }
 }
@@ -286,7 +289,7 @@ static void AppendFlightToFile(Flight flight)
         fileWriter.WriteLine($"{flight.FlightNumber},{flight.Origin},{flight.Destination},{flight.ExpectedTime},{flight.GetType().Name}");
     }
 }
-//CreateNewFlight(terminal5);
+CreateNewFlight(terminal5);
 // 7. Display full flight details from an airline (Hendi)
 static Airline DisplayFullFlightDetails(Terminal terminal5)
 {
@@ -500,5 +503,33 @@ static void ModifyFlightDetails(Terminal terminal5)
 ModifyFlightDetails(terminal5);
 
 // 9. Display scheduled flights in chronological order, with boarding gates assignments where applicable (Ahmad)
+
+
+static void DisplayScheduledFlights(Terminal terminal5)
+{
+    Console.WriteLine("=============================================");
+    Console.WriteLine("Scheduled Flights in Chronological Order");
+    Console.WriteLine("=============================================");
+    Console.WriteLine(String.Format("{0,-10} {1,-20} {2,-20} {3,-20} {4,-25} {5,-15} {6,-15}", "Flight No", "Airline Name", "Origin", "Destination", "Expected Time", "Status", "Boarding Gate"));
+
+    var allFlights = new List<Flight>();
+
+    foreach (var airline in terminal5.airlines.Values)
+    {
+        allFlights.AddRange(airline.Flights.Values);
+    }
+
+    var sortedFlights = allFlights.OrderBy(f => f.ExpectedTime).ToList();
+
+    foreach (var flight in sortedFlights)
+    {
+        string boardingGate = terminal5.boardingGates.Values.FirstOrDefault(g => g.Flight == flight)?.GateName ?? "None";
+        Airline airline = terminal5.GetAirlineFromFlight(flight);
+        Console.WriteLine(String.Format("{0,-10} {1,-20} {2,-20} {3,-20} {4,-25} {5,-15} {6,-15}", flight.FlightNumber, airline.Name, flight.Origin, flight.Destination, flight.ExpectedTime.ToString("dd/MM/yyyy hh:mm:ss tt"), flight.Status, boardingGate));
+    }
+}
+
+// Call the method to display scheduled flights
+DisplayScheduledFlights(terminal5);
 // Advanced Features
 
