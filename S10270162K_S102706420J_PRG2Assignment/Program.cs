@@ -12,9 +12,86 @@ using S10270162K_S102706420J_PRG2Assignment;
 // Partner Name : Hendi Wong Jia Ming
 //==========================================================
 
-
 // Basic Features
 Terminal terminal5 = new Terminal("Terminal 5");
+
+LoadAirlinesAndBoardingGates(terminal5);
+LoadFlights(terminal5);
+double numberOfAirlines = terminal5.airlines.Count;
+double numberOfBoardingGate = terminal5.boardingGates.Count;
+double numberOfFlight = 0;
+foreach (KeyValuePair<string, Airline> entry in terminal5.airlines)
+{
+    numberOfFlight += entry.Value.Flights.Count;
+}
+
+Console.WriteLine("Loading Airlines...");
+Console.WriteLine($"{numberOfAirlines} Airlines Loaded!");
+Console.WriteLine("Loading Boarding Gates...");
+Console.WriteLine($"{numberOfBoardingGate} Boarding Gates Loaded!");
+Console.WriteLine("Loading Flights...");
+Console.WriteLine($"{numberOfFlight} Flights Loaded!");
+
+while (true)
+{
+    DisplayMenu();
+    string option = Console.ReadLine();
+    int parsedOption;
+
+    if (string.IsNullOrEmpty(option) || !int.TryParse(option, out parsedOption))
+    {
+        Console.WriteLine("Invalid input. Please try again.");
+        continue;
+    }
+
+    switch (parsedOption)
+    {
+        case 0:
+            Environment.Exit(0);
+            break;
+        case 1:
+            ListAllFlights(terminal5);
+            break;
+        case 2:
+            ListAllBoardingGates(terminal5);
+            break;
+        case 3:
+            AssignBoardingGate(terminal5);
+            break;
+        case 4:
+            CreateNewFlight(terminal5);
+            break;
+        case 5:
+            DisplayFullFlightDetails(terminal5);
+            break;
+        case 6:
+            ModifyFlightDetails(terminal5);
+            break;
+        case 7:
+            DisplayScheduledFlights(terminal5);
+            break;
+    }
+}
+
+
+// Display Menu
+static void DisplayMenu()
+{
+    Console.WriteLine("=============================================");
+    Console.WriteLine("Welcome to Changi Airport Terminal 5");
+    Console.WriteLine("=============================================");
+    Console.WriteLine("1. List All Flights");
+    Console.WriteLine("2. List Boarding Gates");
+    Console.WriteLine("3. Assign a Boarding Gate to a Flight");
+    Console.WriteLine("4. Create Flight");
+    Console.WriteLine("5. Display Airline Flights");
+    Console.WriteLine("6. Modify Flight Details");
+    Console.WriteLine("7. Display Flight Schedule");
+    Console.WriteLine("0. Exit");
+    Console.Write("Please select your option: ");
+}
+
+
 
 // 1. Load files (airlines and boarding gates) (Hendi)
 static void LoadAirlinesAndBoardingGates(Terminal terminal5)
@@ -46,12 +123,6 @@ static void LoadAirlinesAndBoardingGates(Terminal terminal5)
         }
     }
 }
-
-LoadAirlinesAndBoardingGates(terminal5);
-
-
-// Test code for Question 1
-// Console.WriteLine(terminal5.ToString());
 
 // 2. Load files (flights) (Ahmad)
 static void LoadFlights(Terminal terminal5)
@@ -102,9 +173,6 @@ static void LoadFlights(Terminal terminal5)
         }
     }
 }
-LoadFlights(terminal5);
-
-
 
 // 3. List all flights with their basic information (Ahmad)
 static void ListAllFlights(Terminal terminal5)
@@ -125,7 +193,6 @@ static void ListAllFlights(Terminal terminal5)
     }
 }
 
-ListAllFlights(terminal5);
 
 // 4. List all boarding gates (Hendi)
 static void ListAllBoardingGates(Terminal terminal5)
@@ -140,7 +207,6 @@ static void ListAllBoardingGates(Terminal terminal5)
         Console.WriteLine(String.Format("{0,-15} {1,-10} {2,-10} {3,-10}", entry.Key, entry.Value.SupportsDDJB, entry.Value.SupportsCFFT, entry.Value.SupportsLWTT));
     }
 }
-ListAllBoardingGates(terminal5);
 
 
 // 5. Assign a boarding gate to a flight (Ahmad)
@@ -216,7 +282,6 @@ static void AssignBoardingGate(Terminal terminal5)
         }
     }
 }
-AssignBoardingGate(terminal5);
 // 6. Create a new flight (Ahmad)
 static void CreateNewFlight(Terminal terminal5)
 {
@@ -231,7 +296,7 @@ static void CreateNewFlight(Terminal terminal5)
         Console.Write("Enter Destination: ");
         string destination = Console.ReadLine();
 
-        Console.Write("Enter Expected Departure/Arrival Time (e.g., 11:45 AM): ");
+        Console.Write("Enter Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
         DateTime expectedTime = DateTime.Parse(Console.ReadLine());
 
         Console.Write("Would you like to enter a Special Request Code? (Y/N): ");
@@ -289,7 +354,6 @@ static void AppendFlightToFile(Flight flight)
         fileWriter.WriteLine($"{flight.FlightNumber},{flight.Origin},{flight.Destination},{flight.ExpectedTime},{flight.GetType().Name}");
     }
 }
-CreateNewFlight(terminal5);
 // 7. Display full flight details from an airline (Hendi)
 static Airline DisplayFullFlightDetails(Terminal terminal5)
 {
@@ -348,7 +412,6 @@ static Airline DisplayFullFlightDetails(Terminal terminal5)
     }
     return airlineSearch;
 }
-DisplayFullFlightDetails(terminal5);
 // 8. Modify flight details (Hendi)
 static void ModifyFlightDetails(Terminal terminal5)
 {
@@ -476,7 +539,16 @@ static void ModifyFlightDetails(Terminal terminal5)
                 if (!flightFound)
                 {
                     Console.WriteLine("Flight does not have a Boarding Gate");
-                    break;
+                    Console.Write("Do you want to assign a Boarding Gate? (Y/N): ");
+                    string option = Console.ReadLine();
+                    if (option == "Y")
+                    {
+                        AssignBoardingGate(terminal5);
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
                 oldGate.Flight = null;
                 Console.WriteLine($"Flight removed from {oldGate.GateName}.");
@@ -498,9 +570,7 @@ static void ModifyFlightDetails(Terminal terminal5)
         bool result = airlineSearch.RemoveFlight(flightObjectToModify);
         Console.WriteLine("Flight removed");
     }
-    DisplayFullFlightDetails(terminal5);
 }
-ModifyFlightDetails(terminal5);
 
 // 9. Display scheduled flights in chronological order, with boarding gates assignments where applicable (Ahmad)
 
@@ -529,7 +599,5 @@ static void DisplayScheduledFlights(Terminal terminal5)
     }
 }
 
-// Call the method to display scheduled flights
-DisplayScheduledFlights(terminal5);
 // Advanced Features
 
