@@ -260,8 +260,20 @@ static void AssignBoardingGate(Terminal terminal5)
                 string updateStatus = Console.ReadLine().ToUpper();
                 if (updateStatus == "Y")
                 {
-                    Console.Write("Enter new Status (Delayed/Boarding/On Time): ");
-                    flight.Status = Console.ReadLine();
+                    while (true)
+                    {
+                        Console.Write("Enter new Status (Delayed/Boarding/On Time): ");
+                        string status = Console.ReadLine();
+                        if (status == "Delayed" || status == "Boarding" || status == "On Time")
+                        {
+                            flight.Status = status;
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid status. Please enter 'Delayed', 'Boarding', or 'On Time'.");
+                        }
+                    }
                 }
                 else
                 {
@@ -287,8 +299,17 @@ static void CreateNewFlight(Terminal terminal5)
 {
     while (true)
     {
-        Console.Write("Enter Flight Number: ");
-        string flightNumber = Console.ReadLine();
+        string flightNumber;
+        while (true)
+        {
+            Console.Write("Enter Flight Number: ");
+            flightNumber = Console.ReadLine();
+            if (!string.IsNullOrEmpty(flightNumber))
+            {
+                break;
+            }
+            Console.WriteLine("Flight Number cannot be empty. Please try again.");
+        }
 
         Console.Write("Enter Origin: ");
         string origin = Console.ReadLine();
@@ -304,8 +325,16 @@ static void CreateNewFlight(Terminal terminal5)
         string specialRequestCode = null;
         if (specialRequest == "Y")
         {
-            Console.Write("Enter Special Request Code: ");
-            specialRequestCode = Console.ReadLine();
+            while (true)
+            {
+                Console.Write("Enter Special Request Code: ");
+                specialRequestCode = Console.ReadLine();
+                if (specialRequestCode == "CFFT" || specialRequestCode == "DDJB" || specialRequestCode == "LWTT" || string.IsNullOrEmpty(specialRequestCode))
+                {
+                    break;
+                }
+                Console.WriteLine("Invalid Special Request Code. Please enter 'CFFT', 'DDJB', 'LWTT', or leave it empty.");
+            }
         }
 
         Flight flight;
