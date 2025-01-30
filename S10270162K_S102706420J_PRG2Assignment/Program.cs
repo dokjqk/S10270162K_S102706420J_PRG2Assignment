@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text;
 using S10270162K_S102706420J_PRG2Assignment;
 
 //==========================================================
@@ -12,9 +13,7 @@ using S10270162K_S102706420J_PRG2Assignment;
 // Partner Name : Hendi Wong Jia Ming
 //==========================================================
 
-// Basic Features
 Terminal terminal5 = new Terminal("Terminal 5");
-
 LoadAirlinesAndBoardingGates(terminal5);
 LoadFlights(terminal5);
 double numberOfAirlines = terminal5.airlines.Count;
@@ -43,7 +42,6 @@ while (true)
         Console.WriteLine("Invalid input. Please try again.");
         continue;
     }
-
     switch (parsedOption)
     {
         case 0:
@@ -73,6 +71,9 @@ while (true)
         case 8:
             ProcessUnassignedFlights(terminal5);
             break;
+        case 9:
+            DisplayTotalFeePerAirline(terminal5);
+            break;
 
     }
 }
@@ -92,12 +93,11 @@ static void DisplayMenu()
     Console.WriteLine("6. Modify Flight Details");
     Console.WriteLine("7. Display Flight Schedule");
     Console.WriteLine("8. Process all unassigned fights to boarding gates in bulk");
+    Console.WriteLine("9. Display the total fee per airline for the day");
     Console.WriteLine("0. Exit");
     Console.Write("Please select your option: ");
 }
-
-
-
+// Basic Features
 // 1. Load files (airlines and boarding gates) (Hendi)
 static void LoadAirlinesAndBoardingGates(Terminal terminal5)
 {
@@ -212,7 +212,6 @@ static void ListAllBoardingGates(Terminal terminal5)
         Console.WriteLine(String.Format("{0,-15} {1,-10} {2,-10} {3,-10}", entry.Key, entry.Value.SupportsDDJB, entry.Value.SupportsCFFT, entry.Value.SupportsLWTT));
     }
 }
-
 
 // 5. Assign a boarding gate to a flight (Ahmad)
 static void AssignBoardingGate(Terminal terminal5)
@@ -413,7 +412,7 @@ static Airline DisplayFullFlightDetails(Terminal terminal5)
     Console.WriteLine("=============================================");
     Console.WriteLine($"List of Flights for {airlineSearch.Name}");
     Console.WriteLine("=============================================");
-    Console.WriteLine(String.Format("{0,-15} {1,-30} {2,-15} {3,-20} {4,-35} {5,-20} {6,-20} {7,-20}", "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival Time", "Status", "Special Request Code", "Boarding Gate"));
+    Console.WriteLine(String.Format("{0,-20} {1,-35} {2,-20} {3,-25} {4,-40} {5,-25} {6,-25} {7,-25}", "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival Time", "Status", "Special Request Code", "Boarding Gate"));
 
     foreach (KeyValuePair<string, Flight> entry in airlineSearch.Flights)
     {
@@ -442,7 +441,7 @@ static Airline DisplayFullFlightDetails(Terminal terminal5)
                 boardingGate = entryBoarding.Key;
             }
         }
-        Console.WriteLine(String.Format("{0,-15} {1,-30} {2,-15} {3,-20} {4,-35} {5,-20} {6,-20} {7,-20}", entry.Key, airlineSearch.Name, entry.Value.Origin, entry.Value.Destination, entry.Value.ExpectedTime, entry.Value.Status, specialRequestCode, boardingGate));
+        Console.WriteLine(String.Format("{0,-20} {1,-35} {2,-20} {3,-25} {4,-40} {5,-25} {6,-25} {7,-25}", entry.Key, airlineSearch.Name, entry.Value.Origin, entry.Value.Destination, entry.Value.ExpectedTime, entry.Value.Status, specialRequestCode, boardingGate));
     }
     return airlineSearch;
 }
@@ -607,8 +606,6 @@ static void ModifyFlightDetails(Terminal terminal5)
 }
 
 // 9. Display scheduled flights in chronological order, with boarding gates assignments where applicable (Ahmad)
-
-
 static void DisplayScheduledFlights(Terminal terminal5)
 {
     Console.WriteLine("=============================================");
@@ -634,7 +631,6 @@ static void DisplayScheduledFlights(Terminal terminal5)
 }
 
 // Advanced Features
-
 // Advanced Features: Process all unassigned flights to boarding gates in bulk
 static void ProcessUnassignedFlights(Terminal terminal5)
 {
@@ -732,6 +728,63 @@ static void ProcessUnassignedFlights(Terminal terminal5)
     }
 }
 
+// Advanced Features: Display the total fee per airline for the day
+static void DisplayTotalFeePerAirline(Terminal terminal5)
+{
+    bool unassignedFound = false;
+    // Find unassigned flights
+    foreach (KeyValuePair<string, Airline> entry in terminal5.airlines)
+    {
+        Airline airlineTerminal = entry.Value;
+        foreach (KeyValuePair<string, Flight> entryFlight in airlineTerminal.Flights)
+        {
+            bool matchFound = false;
+            Flight airlineFlight = entryFlight.Value;
+            foreach (KeyValuePair<string, BoardingGate> entryBoardingGate in terminal5.boardingGates)
+            {
+                BoardingGate terminalBoardingGate = entryBoardingGate.Value;
+                if (airlineFlight == terminalBoardingGate.Flight)
+                {
+                    matchFound = true;
+                }
+            }
+            if (matchFound == false)
+            {
+                unassignedFound = true;
+            }
+        }
+    }
+    if (unassignedFound != false)
+    {
+        Console.WriteLine("Ensure that all unassigned Flights have their Boarding Gates assigned before running this feature again.");
+    }
+    else
+    {
+        Console.WriteLine("All flight assigned.");
+        foreach (KeyValuePair<string, Airline> entry in terminal5.airlines)
+        {
+            Airline airlineTerminal = entry.Value;
+            double totalOriginalFees = 0;
+            double totalFlightDiscount = 0;
+            foreach (KeyValuePair<string, Flight> entryFlight in airlineTerminal.Flights)
+            {
+                double fees = entryFlight.Value.CalculateFees();
+                double originalFees = entryFlight.Value.OriginalCalculateFees();
+                double discountFees = Math.Abs(entryFlight.Value.DiscountCalculateFees());
+                totalOriginalFees += originalFees;
+                totalFlightDiscount += discountFees;
+            }
+            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine($"{airlineTerminal.Name} total fee for the day.");
+            Console.WriteLine("---------------------------------------------");
+            double totalDiscount = airlineTerminal.DiscountCalculateFees() + totalFlightDiscount;
+            double finalCost = airlineTerminal.CalculateFees() - totalFlightDiscount;
+            Console.WriteLine($"Original cost: {totalOriginalFees:C2}");
+            Console.WriteLine($"Total discount: {totalDiscount:C2}");
+            Console.WriteLine($"Final cost: {totalOriginalFees:C2} - {totalDiscount:C2} = {finalCost:C2}");
+        }
+    }
+}
 
 
 

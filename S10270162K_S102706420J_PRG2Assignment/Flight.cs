@@ -62,6 +62,11 @@ namespace S10270162K_S102706420J_PRG2Assignment
         }
 
         public abstract double CalculateFees();
+        public abstract double DiscountCalculateFees();
+        public abstract double OriginalCalculateFees();
+
+
+
 
         public override string ToString()
         {

@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\whendijm\\Desktop\\Programming\\Assignment 2 Validation\\S10270162K_S102706420J_PRG2Assignment\\S10270162K_S102706420J_PRG2Assignment.csproj",
+      "projectUniqueName": "C:\\Users\\whendijm\\Desktop\\Programming Advanced Features\\S10270162K_S102706420J_PRG2Assignment\\S10270162K_S102706420J_PRG2Assignment.csproj",
       "projectName": "S10270162K_S102706420J_PRG2Assignment",
-      "projectPath": "C:\\Users\\whendijm\\Desktop\\Programming\\Assignment 2 Validation\\S10270162K_S102706420J_PRG2Assignment\\S10270162K_S102706420J_PRG2Assignment.csproj",
+      "projectPath": "C:\\Users\\whendijm\\Desktop\\Programming Advanced Features\\S10270162K_S102706420J_PRG2Assignment\\S10270162K_S102706420J_PRG2Assignment.csproj",
       "packagesPath": "C:\\Users\\whendijm\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\whendijm\\Desktop\\Programming\\Assignment 2 Validation\\S10270162K_S102706420J_PRG2Assignment\\obj\\",
+      "outputPath": "C:\\Users\\whendijm\\Desktop\\Programming Advanced Features\\S10270162K_S102706420J_PRG2Assignment\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

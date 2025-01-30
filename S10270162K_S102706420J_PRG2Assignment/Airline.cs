@@ -74,7 +74,7 @@ namespace S10270162K_S102706420J_PRG2Assignment
             double fees = 0;
             foreach (KeyValuePair<string, Flight> entry in flights)
             {
-                fees += entry.Value.CalculateFees();
+                fees += entry.Value.OriginalCalculateFees();
             }
             if (flights.Count > 5)
             {
@@ -83,10 +83,33 @@ namespace S10270162K_S102706420J_PRG2Assignment
             if (flights.Count >= 3)
             {
                 int countThree = flights.Count / 3;
-                double additionalDiscount = countThree * 50;
+                double additionalDiscount = countThree * 350;
                 fees -= additionalDiscount;
             }
             return fees;
+        }
+
+        public double DiscountCalculateFees()
+        {
+            double fees = 0;
+            foreach (KeyValuePair<string, Flight> entry in flights)
+            {
+                fees += entry.Value.OriginalCalculateFees();
+            }
+
+            double discount = 0;
+
+            if (flights.Count > 5)
+            {
+                discount += fees * 0.03;
+            }
+            if (flights.Count >= 3)
+            {
+                int countThree = flights.Count / 3;
+                discount += countThree * 350; 
+            }
+
+            return discount;
         }
 
         public override string ToString()
