@@ -64,10 +64,27 @@
               "RelativeDocumentMoniker": "S10270162K_S102706420J_PRG2Assignment\\Program.cs",
               "ToolTip": "C:\\Users\\whendijm\\Desktop\\Programming Advanced Features\\S10270162K_S102706420J_PRG2Assignment\\Program.cs",
               "RelativeToolTip": "S10270162K_S102706420J_PRG2Assignment\\Program.cs",
-              "ViewState": "AgIAAOwCAAAAAAAAAAAjwAkDAABMAAAAAAAAAA==",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAADQAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-20T14:34:52.865Z",
               "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Airline.cs",
+              "DocumentMoniker": "C:\\Users\\whendijm\\Desktop\\Programming Advanced Features\\S10270162K_S102706420J_PRG2Assignment\\Airline.cs",
+              "RelativeDocumentMoniker": "S10270162K_S102706420J_PRG2Assignment\\Airline.cs",
+              "ToolTip": "C:\\Users\\whendijm\\Desktop\\Programming Advanced Features\\S10270162K_S102706420J_PRG2Assignment\\Airline.cs",
+              "RelativeToolTip": "S10270162K_S102706420J_PRG2Assignment\\Airline.cs",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAAwFUAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-22T17:25:57.581Z",
               "EditorCaption": ""
             },
             {
@@ -80,8 +97,7 @@
               "RelativeToolTip": "S10270162K_S102706420J_PRG2Assignment\\NORMFlight.cs",
               "ViewState": "AgIAAB8AAAAAAAAAAAAmwD0AAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-30T15:25:00.521Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-30T15:25:00.521Z"
             },
             {
               "$type": "Document",
@@ -93,12 +109,7 @@
               "RelativeToolTip": "S10270162K_S102706420J_PRG2Assignment\\CFFTFlight.cs",
               "ViewState": "AgIAACcAAAAAAAAAAAAuwEUAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-30T15:21:36.57Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "WhenOpened": "2025-01-30T15:21:36.57Z"
             },
             {
               "$type": "Document",
@@ -122,8 +133,7 @@
               "RelativeToolTip": "S10270162K_S102706420J_PRG2Assignment\\Terminal.cs",
               "ViewState": "AgIAACwAAAAAAAAAAAAwwBMAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-23T07:03:26.94Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-23T07:03:26.94Z"
             },
             {
               "$type": "Document",
@@ -135,8 +145,7 @@
               "RelativeToolTip": "S10270162K_S102706420J_PRG2Assignment\\DDJBFlight.cs",
               "ViewState": "AgIAAC8AAAAAAAAAAAAuwDYAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-27T11:07:42.102Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-27T11:07:42.102Z"
             },
             {
               "$type": "Document",
@@ -148,8 +157,7 @@
               "RelativeToolTip": "S10270162K_S102706420J_PRG2Assignment\\LWTTFlight.cs",
               "ViewState": "AgIAAC8AAAAAAAAAAAAuwDQAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-27T11:01:37.011Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-27T11:01:37.011Z"
             },
             {
               "$type": "Document",
@@ -161,8 +169,7 @@
               "RelativeToolTip": "S10270162K_S102706420J_PRG2Assignment\\Flight.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAowEUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-27T10:39:48.12Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-27T10:39:48.12Z"
             },
             {
               "$type": "Document",
@@ -186,21 +193,7 @@
               "RelativeToolTip": "S10270162K_S102706420J_PRG2Assignment\\airlines.csv",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002120|",
-              "WhenOpened": "2025-01-23T06:55:21.832Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Airline.cs",
-              "DocumentMoniker": "C:\\Users\\whendijm\\Desktop\\Programming Advanced Features\\S10270162K_S102706420J_PRG2Assignment\\Airline.cs",
-              "RelativeDocumentMoniker": "S10270162K_S102706420J_PRG2Assignment\\Airline.cs",
-              "ToolTip": "C:\\Users\\whendijm\\Desktop\\Programming Advanced Features\\S10270162K_S102706420J_PRG2Assignment\\Airline.cs",
-              "RelativeToolTip": "S10270162K_S102706420J_PRG2Assignment\\Airline.cs",
-              "ViewState": "AgIAAE0AAAAAAAAAAAAAwFUAAAA6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-22T17:25:57.581Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-23T06:55:21.832Z"
             }
           ]
         }
