@@ -103,11 +103,11 @@ static void DisplayMenu()
     Console.Write("Please select your option: ");
 }
 
-
 // Basic Features
 // 1. Load files (airlines and boarding gates) (Hendi)
 static void LoadAirlinesAndBoardingGates(Terminal terminal5)
 {
+    // Define the file paths for the airline and boarding gate data.
     const string airlineFile = "airlines.csv";
     const string boardingGatesFile = "boardinggates.csv";
 
@@ -118,6 +118,7 @@ static void LoadAirlinesAndBoardingGates(Terminal terminal5)
         return;
     }
 
+    // Open and read the airlines CSV file.
     using (StreamReader fileReader = new StreamReader(airlineFile))
     {
         fileReader.ReadLine(); // Skip header.
@@ -130,6 +131,7 @@ static void LoadAirlinesAndBoardingGates(Terminal terminal5)
         }
     }
 
+    // Open and read the boarding gates CSV file.
     using (StreamReader fileReader = new StreamReader(boardingGatesFile))
     {
         fileReader.ReadLine();
@@ -220,11 +222,14 @@ static void ListAllFlights(Terminal terminal5)
 // 4. List all boarding gates (Hendi)
 static void ListAllBoardingGates(Terminal terminal5)
 {
+    // Print header.
     Console.WriteLine("=============================================");
     Console.WriteLine("List of Boarding Gates for Changi Airport Terminal 5");
     Console.WriteLine("=============================================");
     Console.WriteLine(String.Format("{0,-15} {1,-10} {2,-10} {3,-10}", "Gate Name", "DDJB", "CFFT", "LWTT"));
     Dictionary<string, BoardingGate> airlineDict = terminal5.boardingGates;
+
+    // Go through each entry in airlineDict and print.
     foreach (KeyValuePair<string, BoardingGate> entry in airlineDict)
     {
         Console.WriteLine(String.Format("{0,-15} {1,-10} {2,-10} {3,-10}", entry.Key, entry.Value.SupportsDDJB, entry.Value.SupportsCFFT, entry.Value.SupportsLWTT));
@@ -462,28 +467,37 @@ static void AppendFlightToFile(Flight flight)
 static Airline DisplayFullFlightDetails(Terminal terminal5)
 {
     Airline airlineSearch = null;
+
+    // Display the list of airlines available in Terminal 5.
     Console.WriteLine("=============================================");
     Console.WriteLine($"List of Airlines for Changi Airport {terminal5.terminalName}");
     Console.WriteLine("=============================================");
     Console.WriteLine(String.Format("{0,-15} {1,-10}", "Airline Code", "Airline Name"));
+
     Dictionary<string, Airline> airlineDict = terminal5.airlines;
+
+    // Loop through the dictionary and print each airline's code and name.
     foreach (KeyValuePair<string, Airline> entry in airlineDict)
     {
         Console.WriteLine(String.Format("{0,-15} {1,-10}", entry.Key, entry.Value.Name));
     }
+
     while (true) // Loop until a valid airline code is entered
     {
         Console.Write("Enter Airline Code: ");
         string airlineCode = Console.ReadLine();
 
+        // Search for the airline in the dictionary.
         foreach (KeyValuePair<string, Airline> entry in airlineDict)
         {
             if (entry.Key == airlineCode)
             {
-                airlineSearch = entry.Value;
+                airlineSearch = entry.Value; // Store the found airline
                 break;
             }
         }
+
+        // If an airline is found, exit the loop. if not, it will loop again.
         if (airlineSearch != null)
         {
             break;
@@ -493,11 +507,15 @@ static Airline DisplayFullFlightDetails(Terminal terminal5)
             Console.WriteLine("Airline not found. Please try again.");
         }
     }
+
+    // Display the airline's flight details.
     Console.WriteLine("=============================================");
     Console.WriteLine($"List of Flights for {airlineSearch.Name}");
     Console.WriteLine("=============================================");
     Console.WriteLine(String.Format("{0,-20} {1,-35} {2,-20} {3,-25} {4,-40} {5,-25} {6,-25} {7,-25}", "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival Time", "Status", "Special Request Code", "Boarding Gate"));
 
+
+    // Find specialRequestCode.
     foreach (KeyValuePair<string, Flight> entry in airlineSearch.Flights)
     {
         string specialRequestCode = null;
@@ -525,6 +543,7 @@ static Airline DisplayFullFlightDetails(Terminal terminal5)
                 boardingGate = entryBoarding.Key;
             }
         }
+        // Print flight details.
         Console.WriteLine(String.Format("{0,-20} {1,-35} {2,-20} {3,-25} {4,-40} {5,-25} {6,-25} {7,-25}", entry.Key, airlineSearch.Name, entry.Value.Origin, entry.Value.Destination, entry.Value.ExpectedTime, entry.Value.Status, specialRequestCode, boardingGate));
     }
     return airlineSearch;
@@ -532,14 +551,21 @@ static Airline DisplayFullFlightDetails(Terminal terminal5)
 // 8. Modify flight details (Hendi)
 static void ModifyFlightDetails(Terminal terminal5)
 {
+    // List of valid destinations.
     List<string> destinationList = new List<string> { "Singapore (SIN)", "Tokyo (NRT)", "Manila (MNL)", "Sydney (SYD)", "Kuala Lumpur (KUL)", "Jakarta (CGK)", "Dubai (DXB)", "Melbourne (MEL)", "London (LHR)", "Hong Kong (HKD)", "Bangkok (BKK)", "Melbourne (MEL)", "Guangzhou (CAN)", "Frankfurt (FRA)" };
+    
+    // Display all flight details and get the airline.
     Airline airlineSearch = DisplayFullFlightDetails(terminal5);
     Flight flightObjectToModify = null;
+
+    // Prompt the user to modify or delete.
     while (true)
     {
         Console.Write("Choose an existing Flight to modify or delete: ");
         string flightToModify = Console.ReadLine().ToUpper().Trim();
         bool flightFound = false;
+
+        // Search for the flight in the selected airline.
         foreach (KeyValuePair<string, Flight> entry in airlineSearch.Flights)
         {
             if (entry.Key == flightToModify)
@@ -559,6 +585,8 @@ static void ModifyFlightDetails(Terminal terminal5)
             break;
         }
     }
+
+    // Display modify options.
     string optionToModify;
     while (true)
     {
@@ -576,7 +604,7 @@ static void ModifyFlightDetails(Terminal terminal5)
             break;
         }
     }
-    if (optionToModify == "1")
+    if (optionToModify == "1") // Modify Flight.
     {
         string modifyOptions;
         while (true)
@@ -655,7 +683,7 @@ static void ModifyFlightDetails(Terminal terminal5)
             Console.WriteLine($"Flight Expected Time: {flightObjectToModify.Destination}");
             Console.WriteLine($"Status: {flightObjectToModify.Status}");
         }
-        else if (modifyOptions == "2")
+        else if (modifyOptions == "2") // Modify Status
         {
             Console.WriteLine($"Flight Number: {flightObjectToModify.FlightNumber}");
             Console.WriteLine($"Airline Name: {airlineSearch.Name}");
@@ -680,7 +708,7 @@ static void ModifyFlightDetails(Terminal terminal5)
             }
 
         }
-        else if (modifyOptions == "3")
+        else if (modifyOptions == "3") // Modify Special Request Code
         {
             Console.WriteLine($"Flight Number: {flightObjectToModify.FlightNumber}");
             string flightNumber = flightObjectToModify.FlightNumber;
@@ -727,7 +755,7 @@ static void ModifyFlightDetails(Terminal terminal5)
             airlineSearch.RemoveFlight(flightObjectToModify);
             airlineSearch.AddFlight(flight);
         }
-        else
+        else // Modify Boarding Gate
         {
             while (true)
             {
@@ -781,7 +809,7 @@ static void ModifyFlightDetails(Terminal terminal5)
             }
         }
     }
-    else
+    else // Delete Flight
     {
         bool result = airlineSearch.RemoveFlight(flightObjectToModify);
         Console.WriteLine("Flight removed");
@@ -917,6 +945,7 @@ static void ProcessUnassignedFlights(Terminal terminal5)
 static void DisplayTotalFeePerAirline(Terminal terminal5)
 {
     bool unassignedFound = false;
+
     // Find unassigned flights
     foreach (KeyValuePair<string, Airline> entry in terminal5.airlines)
     {
@@ -928,17 +957,20 @@ static void DisplayTotalFeePerAirline(Terminal terminal5)
             foreach (KeyValuePair<string, BoardingGate> entryBoardingGate in terminal5.boardingGates)
             {
                 BoardingGate terminalBoardingGate = entryBoardingGate.Value;
+                // If a match is found, mark the flight as assigned
                 if (airlineFlight == terminalBoardingGate.Flight)
                 {
                     matchFound = true;
                 }
             }
+            // If no match is found, mark that there are unassigned flights
             if (matchFound == false)
             {
                 unassignedFound = true;
             }
         }
     }
+    // If there are unassigned flights, notify user and then exit
     if (unassignedFound != false)
     {
         Console.WriteLine("Ensure that all unassigned Flights have their Boarding Gates assigned before running this feature again.");
@@ -946,11 +978,13 @@ static void DisplayTotalFeePerAirline(Terminal terminal5)
     else
     {
         Console.WriteLine("All flight assigned.");
+        // Iterate through each airline to calculate total fees
         foreach (KeyValuePair<string, Airline> entry in terminal5.airlines)
         {
             Airline airlineTerminal = entry.Value;
             double totalOriginalFees = 0;
             double totalFlightDiscount = 0;
+            // Calculate the total fees for all flights of the airline
             foreach (KeyValuePair<string, Flight> entryFlight in airlineTerminal.Flights)
             {
                 double fees = entryFlight.Value.CalculateFees();
@@ -959,11 +993,14 @@ static void DisplayTotalFeePerAirline(Terminal terminal5)
                 totalOriginalFees += originalFees;
                 totalFlightDiscount += discountFees;
             }
+
+            // Display airline fee details
             Console.WriteLine("---------------------------------------------");
             Console.WriteLine($"{airlineTerminal.Name} total fee for the day.");
             Console.WriteLine("---------------------------------------------");
             double totalDiscount = airlineTerminal.DiscountCalculateFees() + totalFlightDiscount;
             double finalCost = totalOriginalFees - totalDiscount;
+            // Display the cost breakdown
             Console.WriteLine($"Original cost: {totalOriginalFees:C2}");
             Console.WriteLine($"Total discount: {totalDiscount:C2}");
             Console.WriteLine($"Final cost: {totalOriginalFees:C2} - {totalDiscount:C2} = {finalCost:C2}");
