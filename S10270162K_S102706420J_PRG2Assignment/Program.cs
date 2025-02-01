@@ -155,7 +155,7 @@ static void LoadFlights(Terminal terminal5)
         Console.WriteLine($"Error: {flightsFile} not found.");
         return;
     }
-
+    //To Open and read the flights CSV file.
     using (StreamReader fileReader = new StreamReader(flightsFile))
     {
         fileReader.ReadLine(); // Skip header.
@@ -186,7 +186,7 @@ static void LoadFlights(Terminal terminal5)
                     flight = new NORMFlight(flightNumber, origin, destination, expectedTime, "Scheduled");
                     break;
             }
-
+            // Find the airline that matches the flight number prefix and add the flight to it
             Airline airline = terminal5.airlines.Values.FirstOrDefault(a => flightNumber.StartsWith(a.Code));
             if (airline != null)
             {
@@ -209,7 +209,7 @@ static void ListAllFlights(Terminal terminal5)
     Console.WriteLine("=============================================");
     Console.WriteLine(String.Format("{0,-15} {1,-20} {2,-20} {3,-20} {4,-35}", "Flight Number", "Airline Name", "Origin", "Destination", "Expected Date "));
     Console.WriteLine("Departure/Arrival Time");
-
+    //Loop Through each airline and their flights to display the fight details
     foreach (var airline in terminal5.airlines.Values)
     {
         foreach (var flight in airline.Flights.Values)
@@ -243,6 +243,7 @@ static void AssignBoardingGate(Terminal terminal5)
     Airline airline = null;
     string flightNumber = null;
 
+    //Prompt User to enter theyre flight number
     while (true)
     {
         Console.Write("Enter Flight Number: ");
@@ -258,7 +259,7 @@ static void AssignBoardingGate(Terminal terminal5)
             break;
         }
     }
-
+    // search for the respective flight in the terminal's airlines
     foreach (var a in terminal5.airlines.Values)
     {
         if (a.Flights.TryGetValue(flightNumber, out flight))
@@ -273,7 +274,7 @@ static void AssignBoardingGate(Terminal terminal5)
         Console.WriteLine("Flight not found.");
         return;
     }
-
+    // display flight information
     Console.WriteLine("Flight Information:");
     Console.WriteLine($"Flight Number: {flight.FlightNumber}");
     Console.WriteLine($"Airline: {airline.Name}");
@@ -281,7 +282,7 @@ static void AssignBoardingGate(Terminal terminal5)
     Console.WriteLine($"Destination: {flight.Destination}");
     Console.WriteLine($"Expected Time: {flight.ExpectedTime}");
     Console.WriteLine($"Special Request Code: {flight.GetType().Name}");
-
+    // prompt user for them to enter their boarding gate
     while (true)
     {
         Console.Write("Enter Boarding Gate: ");
@@ -298,7 +299,7 @@ static void AssignBoardingGate(Terminal terminal5)
                 Console.WriteLine($"Special Request Code: {flight.GetType().Name}");
                 Console.WriteLine($"Boarding Gate: {gate.GateName}");
 
-
+                //prompt user for updating flight status
                 Console.Write("Would you like to update the Status of the Flight? (Y/N): ");
                 string updateStatus = Console.ReadLine().Trim().ToUpper();
                 if (updateStatus == "Y")
@@ -340,9 +341,11 @@ static void AssignBoardingGate(Terminal terminal5)
 // 6. Create a new flight (Ahmad)
 static void CreateNewFlight(Terminal terminal5)
 {
+    //List out the valid destinations
     List<string> destinationList = new List<string> { "Singapore (SIN)", "Tokyo (NRT)", "Manila (MNL)", "Sydney (SYD)", "Kuala Lumpur (KUL)", "Jakarta (CGK)", "Dubai (DXB)", "Melbourne (MEL)", "London (LHR)", "Hong Kong (HKD)", "Bangkok (BKK)", "Melbourne (MEL)", "Guangzhou (CAN)", "Frankfurt (FRA)" };
     while (true)
     {
+        // Prompt User to enter flight number
         string flightNumber;
         while (true)
         {
@@ -356,6 +359,7 @@ static void CreateNewFlight(Terminal terminal5)
         }
 
         string origin;
+        //prompt user for origin entry
         while (true)
         {
             Console.Write("Enter Origin: ");
@@ -369,7 +373,7 @@ static void CreateNewFlight(Terminal terminal5)
                 Console.WriteLine("Invalid origin.");
             }
         }
-
+        //prompt for destination entry
         string destination;
         while (true)
         {
@@ -384,7 +388,7 @@ static void CreateNewFlight(Terminal terminal5)
                 Console.WriteLine("Invalid destination.");
             }
         }
-
+        //prompt for departure/arrival time entry
         DateTime expectedTime;
         while (true)
         {
@@ -395,7 +399,7 @@ static void CreateNewFlight(Terminal terminal5)
             }
             Console.WriteLine("Invalid date format. Please try again.");
         }
-
+        //prompt for special request code
         Console.Write("Would you like to enter a Special Request Code? (Y/N): ");
         string specialRequest = Console.ReadLine().ToUpper();
         string specialRequestCode = null;
@@ -412,7 +416,7 @@ static void CreateNewFlight(Terminal terminal5)
                 Console.WriteLine("Invalid Special Request Code. Please enter 'CFFT', 'DDJB', 'LWTT', or leave it empty.");
             }
         }
-
+        // create flight object based on special request code
         Flight flight;
         switch (specialRequestCode)
         {
@@ -429,7 +433,7 @@ static void CreateNewFlight(Terminal terminal5)
                 flight = new NORMFlight(flightNumber, origin, destination, expectedTime, "Scheduled");
                 break;
         }
-
+        //find the airline that matches the flight prefix and add the flight to its respective prefix
         Airline airline = terminal5.airlines.Values.FirstOrDefault(a => flightNumber.StartsWith(a.Code));
         if (airline != null)
         {
