@@ -800,6 +800,14 @@ static void ModifyFlightDetails(Terminal terminal5)
                 }
                 oldGate.Flight = null;
                 Console.WriteLine($"Flight removed from {oldGate.GateName}.");
+
+                if (!terminal5.boardingGates.TryGetValue(gateToModify, out newGate) || newGate == null)
+                {
+                    Console.WriteLine($"Error: Boarding Gate {gateToModify} does not exist.");
+                    oldGate.Flight = flightObjectToModify; // Restore the flight to its original gate
+                    return;
+                }
+
                 foreach (KeyValuePair<string, BoardingGate> entryBoarding in terminal5.boardingGates)
                 {
                     if (entryBoarding.Value.GateName == gateToModify)
